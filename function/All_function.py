@@ -231,12 +231,14 @@ def learing_data(a):
 def head():
     os.system("clear")
     name = "Chat-Bot"
+    version = "  version 0.1"
     nm = "="*15+"* "+name+" *"+"="*15
     d = "="*35
+    c = "="*29
     print(Fore.GREEN)
     print_centre(d)
     print_centre(nm)
-    print_centre(d)
+    print_centre(c+" V 0.1")
     print(Fore.RESET)
 
 def learng_mood(a, b):
