@@ -12,7 +12,6 @@ import webbrowser
 import time
 name = fun.Name()
 fun.head()
-output(fun.single_data('help'))
 # if fun.internat_on() == "active":
 def Main():
     while True:
