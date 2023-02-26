@@ -6,7 +6,7 @@ import json
 import pyautogui
 import random
 import re
-import wikipedia
+import pywhatkit
 import shutil
 import colorama
 from colorama import Fore
@@ -27,30 +27,15 @@ def internat_on():
       return "down"
 def get_news(): 
     if internat_on()== "active":
-      
-        # BBC news api 
-        main_url = " https://newsapi.org/v1/articles?source=bbc-news&sortBy=top&apiKey=3b651a51643045f7a8d0c4ee775c68de"
-    
-        # fetching data in json format 
-        open_bbc_page = requests.get(main_url).json() 
-    
-        # getting all articles in a string article 
+        main_url = "https://newsapi.org/v1/articles?source=bbc-news&sortBy=top&apiKey=3b651a51643045f7a8d0c4ee775c68de"
+        open_bbc_page = requests.get(main_url).json()  
         article = open_bbc_page["articles"] 
-    
-        # empty list which will  
-        # contain all trending news 
-        results = [] 
-        
+        results = []
         for ar in article: 
             results.append(ar["title"]) 
-            
-        for i in range(len(results)): 
-            
-            # printing all trending news 
+        for i in range(5): 
             output(str(i + 1) + " " +results[i]) 
-        
-
-        return "So these were the top news from today "
+        output("So these were the top news from today ")
     else:
         return "please check your internet connection first"
 
@@ -65,8 +50,7 @@ def Clear():
         b = os.system("clear")
         return b
     else:
-        a = os.system("cls")
-        return a
+        return os.system("cls")
 
 def get_time():
     now = datetime.now()
@@ -99,12 +83,18 @@ def check_on_wikipedia(query):
     query = query.replace("who is", "")
     query = query.replace("what is", "")
     query = query.replace("do you know", "")
-
-    query = query.strip()
-
     try:
-        data = wikipedia.summary(query,  sentences=3)
-        output(data)
+        data = []
+        query = query.strip()
+        wikipedia.set_lang('en')
+        result = wikipedia.search(query)
+        for i in result:
+            data.append(i)
+        
+        page = wikipedia.page(data[0])
+        summary = wikipedia.summary(page,sentences=3)
+        summary = summary.strip()
+        output(summary)
     except Exception as e:
         return ""
 
@@ -178,7 +168,7 @@ def searching(a):
 def playing(a):
     x = re.split("\s", a)
     for i in range(len(x)):
-        if "playing" in x[i]:
+        if "play" in x[i]:
             return "yes"
 
 #  === its for linux ===
@@ -228,6 +218,19 @@ def learing_data(a):
                 output("sorry , no find data")
     except Exception as e:
         return "No"
+def wishMe():
+    he = single_data('help')
+    hour = int(get_hours())
+    if hour>= 0 and hour<12:
+        output("Good Morning Sir !"+he)
+  
+    elif hour>= 12 and hour<18:
+        output("Good Afternoon Sir !"+he)  
+  
+    else:
+        output("Good Evening Sir !"+he)
+
+
 def head():
     os.system("clear")
     name = "Chat-Bot"
