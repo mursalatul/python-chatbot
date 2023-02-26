@@ -12,6 +12,7 @@ import webbrowser
 import time
 name = fun.Name()
 fun.head()
+fun.wishMe()
 # if fun.internat_on() == "active":
 def Main():
     while True:
@@ -32,6 +33,8 @@ def Main():
             elif "2" in usr or "public" in usr:
                 pub_ip = fun.getIP()
                 output("your public is is "+pub_ip)
+        elif fun.process_input(query,"top news") == "yes":
+            fun.get_news()
         elif "clear" in query:
             fun.Clear()
             fun.head()
@@ -68,6 +71,13 @@ def Main():
                 output("Searching "+a)
                 time.sleep(2)
                 pywhatkit.search(a)
+        elif fun.playing(query) == "yes":
+            query = query.replace("play","")
+            query = query.replace("music","")
+            query = query.replace("song","")
+            output("playing "+query+"song...")
+            time.sleep(2)
+            pywhatkit.playonyt(query)
             
         elif "what is" in query or "who is" in query or "say something" in query or "do you know" in query:
             fun.check_on_wikipedia(query)
@@ -94,12 +104,11 @@ def Main():
             output(fun.single_data("gender"))
         elif fun.json_process_input(query) == None:
                 output("I don't know,What it menes")
-                quer = input(Fore.GREEN +f"{name}it menes :$ "+ Fore.RESET) # jahid
+                quer = input(Fore.GREEN +f"{name} :$ "+ Fore.RESET+"it menes ") # jahid
                 if quer != "i dont know" or "sorry":
-                    aa = quer.replace("it menes","")
+                    aa = quer.replace("it menes :$ ","")
                     fun.learng_mood(query,aa)
                     output("i will remember it next time")       
                 else:
                     output("ok! sir.")
-
 Main()
